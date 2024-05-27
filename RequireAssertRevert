@@ -5,17 +5,23 @@ contract Llanes {
     uint256 public myNumber;
 
     function setNumber(uint256 _num) external {
-        // Using require() to validate input
-        require(_num != 0, "Number cannot be zero");
-        
-        // Using assert() to validate internal state
-        assert(myNumber + _num > myNumber);
+        // Check if the number is zero
+        if (_num == 0) {
+            revert("Number cannot be zero");
+        }
 
-        // Using revert() to revert the transaction
+        // Check if the number is too large
         if (_num > 99) {
             revert("Number is too large");
+        }
+
+        // Using SafeMath for overflow check
+        uint256 newNumber = myNumber + _num;
+        if (newNumber < myNumber) {
+            revert("Overflow detected");
         }
 
         myNumber = _num;
     }
 }
+
