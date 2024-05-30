@@ -4,24 +4,15 @@ pragma solidity ^0.8.0;
 contract Llanes {
     uint256 public myNumber;
 
-    function setNumber(uint256 _num) external {
-        // Check if the number is zero
-        if (_num == 0) {
+    function setNumber(uint256 _num1) external {
+        if (_num1 == 0) {
             revert("Number cannot be zero");
-        }
-
-        // Check if the number is too large
-        if (_num > 99) {
+        } else if (_num1 > 100) {
             revert("Number is too large");
-        }
-
-        // Using SafeMath for overflow check
-        uint256 newNumber = myNumber + _num;
-        if (newNumber < myNumber) {
+        } else if (myNumber + _num1 < myNumber) {
             revert("Overflow detected");
+        } else {
+            myNumber = _num1;
         }
-
-        myNumber = _num;
     }
 }
-
